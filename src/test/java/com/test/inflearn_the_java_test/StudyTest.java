@@ -5,6 +5,7 @@ import org.junit.jupiter.api.*;
 import java.time.Duration;
 import java.util.function.Supplier;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
@@ -14,20 +15,29 @@ class StudyTest {
     @Test
     @DisplayName("스터디 만들기")
     void create_new_study() {
-        // 코드블록은 별도로 실행하기 때문에
-       assertTimeoutPreemptively(Duration.ofMillis(10), () -> {
-           new Study(10);
-           Thread.sleep(300);
-       });
-       // TODO ThreadLocal
-        //  에서 사용하는 코드가 있을 경우, 예상치 못한 문제가 발생 할 수 있음
-        // 스프링 트렌젝션 쓰레드 로컬을 기본으로 사용하는데
-        // 다른 스레드에서 공유가 안됨
-        // 트렌젝션 설정이 제대로 적용이 안될 수 있음 (롤백을 기본)
-        // 바로 DB로 들어갈 수 있기 때문에, 주의해서 사용하세요.
-        // 안전하게 사용할려면 assertTimeout을 사용하세요.
-
+        Study actual = new Study(10);
+        // 리밋이 0 보다 큰가?
+        // 이건 assertj을 인폴트 해줘야 됨
+        assertThat(actual.getLimit()).isGreaterThan(0);
     }
+
+//    @Test
+//    @DisplayName("스터디 만들기")
+//    void create_new_study() {
+//        // 코드블록은 별도로 실행하기 때문에
+//       assertTimeoutPreemptively(Duration.ofMillis(10), () -> {
+//           new Study(10);
+//           Thread.sleep(300);
+//       });
+//       // TODO ThreadLocal
+//        //  에서 사용하는 코드가 있을 경우, 예상치 못한 문제가 발생 할 수 있음
+//        // 스프링 트렌젝션 쓰레드 로컬을 기본으로 사용하는데
+//        // 다른 스레드에서 공유가 안됨
+//        // 트렌젝션 설정이 제대로 적용이 안될 수 있음 (롤백을 기본)
+//        // 바로 DB로 들어갈 수 있기 때문에, 주의해서 사용하세요.
+//        // 안전하게 사용할려면 assertTimeout을 사용하세요.
+//
+//    }
 
 //    @Test
 //    @DisplayName("스터디 만들기")
