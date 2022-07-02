@@ -34,7 +34,6 @@ class StudyTest {
 
     @DisplayName("스터디 만들기")
     @RepeatedTest(value = 10, name = "{displayName}, {currentRepetition}/{totalRepetitions}")
-    //RepeationInfo 이 없다?
     void repeatTest(RepetitionInfo repetitionInfo) {
         System.out.println("test" + repetitionInfo.getCurrentRepetition() + "/" +
                 repetitionInfo.getTotalRepetitions());
