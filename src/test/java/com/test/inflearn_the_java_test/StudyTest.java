@@ -3,6 +3,8 @@ package com.test.inflearn_the_java_test;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.condition.*;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EmptySource;
+import org.junit.jupiter.params.provider.NullSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import java.time.Duration;
@@ -44,6 +46,10 @@ class StudyTest {
     @ParameterizedTest(name = "{index} {displayName}  maessage={0}")
     // 파라미터들을 정의할 수 있음
     @ValueSource( strings =  {"날씨가", "많이", "더워지고", "있네요."})
+    // 비어있는 문자열
+    @EmptySource
+    // null
+    @NullSource
     void parameterizedTest(String message) {
         System.out.println(message);
     }
