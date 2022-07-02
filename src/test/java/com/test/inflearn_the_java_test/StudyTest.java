@@ -1,12 +1,15 @@
 package com.test.inflearn_the_java_test;
 
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.*;
 
 import java.time.Duration;
 import java.util.function.Supplier;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assumptions.assumeTrue;
+import static org.junit.jupiter.api.Assumptions.assumingThat;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class StudyTest {
@@ -15,13 +18,36 @@ class StudyTest {
 
     @Test
     @DisplayName("스터디 만들기")
+    // 운영체제
+//    @EnabledOnOs({OS.WINDOWS, OS.LINUX})
+    // 자바버전
+//    @EnabledOnJre({JRE.JAVA_8, JRE.JAVA_9, JRE.JAVA_10, JRE.JAVA_11, JRE.JAVA_17})
+    @EnabledIfEnvironmentVariable(named = "TEST_ENV", matches = "LOCAL")
     void create_new_study() {
-        Study actual = new Study(10);
-        assertThat(actual.getLimit()).isGreaterThan(0);
+        // 테스트 환경이 로컬인가?
+        String test_env = System.getenv("TEST_ENV");
 
+        assumingThat("LOCAL".equalsIgnoreCase(test_env), () -> {
+            System.out.println("local");
+            Study actual = new Study(100);
+            assertThat(actual.getLimit()).isGreaterThan(0);
+        });
+
+        assumingThat("sounghun".equalsIgnoreCase(test_env), () -> {
+            System.out.println("sounghun");
+            Study actual = new Study(10);
+            assertThat(actual.getLimit()).isGreaterThan(0);
+        });
     }
 
 
+//    @Test
+//    @DisplayName("스터디 만들기")
+//    void create_new_study() {
+//        Study actual = new Study(10);
+//        assertThat(actual.getLimit()).isGreaterThan(0);
+//
+//    }
 
 //    @Test
 //    @DisplayName("스터디 만들기")
@@ -105,6 +131,9 @@ class StudyTest {
 
     @Test
     @DisplayName("스터디 만들기2")
+//    @DisabledOnOs(OS.WINDOWS)
+//    @DisabledOnJre(JRE.OTHER)
+    @EnabledIfEnvironmentVariable(named = "TEST_ENV", matches = "sounghun")
     void create_new_study_again() {
         System.out.println("create1");
     }
