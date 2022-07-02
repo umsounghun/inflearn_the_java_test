@@ -2,6 +2,8 @@ package com.test.inflearn_the_java_test;
 
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.condition.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.time.Duration;
 import java.util.function.Supplier;
@@ -30,6 +32,22 @@ class StudyTest {
         System.out.println("create1");
     }
 
+    @DisplayName("스터디 만들기")
+    @RepeatedTest(value = 10, name = "{displayName}, {currentRepetition}/{totalRepetitions}")
+    //RepeationInfo 이 없다?
+    void repeatTest(RepetitionInfo repetitionInfo) {
+        System.out.println("test" + repetitionInfo.getCurrentRepetition() + "/" +
+                repetitionInfo.getTotalRepetitions());
+    }
+
+    @DisplayName("스터디 만들기")
+    // 다른값들로 테스트 해보고 싶으면
+    @ParameterizedTest(name = "{index} {displayName}  maessage={0}")
+    // 파라미터들을 정의할 수 있음
+    @ValueSource( strings =  {"날씨가", "많이", "더워지고", "있네요."})
+    void parameterizedTest(String message) {
+        System.out.println(message);
+    }
 
 //    @Test
 //    @DisplayName("스터디 만들기")
