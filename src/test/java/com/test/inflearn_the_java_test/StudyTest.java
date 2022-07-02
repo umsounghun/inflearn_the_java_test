@@ -16,17 +16,16 @@ class StudyTest {
     // 실패와 상관없이 문자열을 연산을 하기 때문에, 복잡한 연산이 필요한 경우 람다식을 사용하자
 
 
-    @Test
+    // 가급적 문자열의 오타를 줄이기 위해서 어노테이션을 만들어 놓기
+    @FastTest
     @DisplayName("스터디 만들기 fast")
-    @Tag("fast")
     void create_new_study() {
         Study actual = new Study(10);
         assertThat(actual.getLimit()).isGreaterThan(0);
     }
 
-    @Test
+    @SlowTest
     @DisplayName("스터디 만들기 slow")
-    @Tag("slow")
     void create_new_study_again() {
         System.out.println("create1");
     }
