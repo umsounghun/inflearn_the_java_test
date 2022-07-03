@@ -22,22 +22,26 @@ import static org.junit.jupiter.api.Assumptions.assumeTrue;
 import static org.junit.jupiter.api.Assumptions.assumingThat;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
+// @TestInstance 하나의 인스턴스를 공유하게 됨
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class StudyTest {
-    // 실패와 상관없이 문자열을 연산을 하기 때문에, 복잡한 연산이 필요한 경우 람다식을 사용하자
-
+    int value = 1;
 
     // 가급적 문자열의 오타를 줄이기 위해서 어노테이션을 만들어 놓기
     @FastTest
     @DisplayName("스터디 만들기 fast")
     void create_new_study() {
-        Study actual = new Study(10);
+        System.out.println(this);
+        System.out.println(value++);
+        Study actual = new Study(1);
         assertThat(actual.getLimit()).isGreaterThan(0);
     }
 
     @SlowTest
     @DisplayName("스터디 만들기 slow")
     void create_new_study_again() {
-        System.out.println("create1");
+        System.out.println(this);
+        System.out.println("create1" + value++);
     }
 
     @DisplayName("스터디 만들기")
@@ -257,13 +261,16 @@ class StudyTest {
 //        System.out.println("create1");
 //    }
 
+
+
+    // @TestInstance를 클래스당 만들게 되면, static이 필요없음 -> @BeforeAll, @AfterAll
     @BeforeAll
-    static void beforeAll() {
+    void beforeAll() {
         System.out.println("before all");
     }
 
     @AfterAll
-    static void afterAll() {
+    void afterAll() {
         System.out.println("after all");
     }
 
